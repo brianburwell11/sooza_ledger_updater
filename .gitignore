@@ -1,0 +1,7 @@
+*.csv
+venmo_statements/
+token.pickle
+credentials.json
+client_secret.json
+__pycache__
+TransactionWatchdog.py
