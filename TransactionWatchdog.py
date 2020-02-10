@@ -21,16 +21,17 @@ sheet_name = getenv('sooza_venmo_name')
 class Watchdog():
     def __init__(self):
         self.w = FileSystemEventHandler()
-        self.w.on_created = lambda new_file: self.rename_file_and_update_ledger(new_file.src_path)
+        self.w.on_created = lambda new_file: self.__rename_file_and_update_ledger(new_file.src_path)
 
         self.o = Observer()
         self.o.schedule(self.w, './venmo_statements')
-        self.o.start()
 
+    def wait_for_new_file(self):
+        self.o.start()
         while True:
             sleep(1)
-
-    def rename_file_and_update_ledger(self, full_filename):
+    
+    def __rename_file_and_update_ledger(self, full_filename):
         new_filename = self.__add_current_date_to_filename(full_filename)
         self.__update_venmo_ledger(new_filename, ledger_key, sheet_name)
 
@@ -39,7 +40,7 @@ class Watchdog():
         filename, extension = splitext(full_filename)
 
         todays_date = datetime.now()
-        todays_date = todays_date.strftime('%y%m%d')
+        todays_date = todays_date.strftime('%Y%m%d')
 
         new_filename = f'{filename}-{todays_date}{extension}'
         
@@ -72,4 +73,3 @@ class Watchdog():
     #     validation_code = input('Enter the validation code: ')
 
     #     # validation_code_input = driver.find_elemetn
-w = Watchdog()

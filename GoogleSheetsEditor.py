@@ -26,20 +26,18 @@ class GoogleSheetEditor():
 
     def add_transaction(self, row_num, transaction):
         '''
-        Date, ID, Note, Debit, From, Credit, To
+        Date, ID, Note, Debit, To, Credit, From
         '''
         self.sheet.update_cell(row_num, 1, transaction.date)
         self.sheet.update_cell(row_num, 2, transaction.id)
         self.sheet.update_cell(row_num, 3, transaction.note)
         
         if transaction.credit:
-            self.sheet.update_cell(row_num, 7, transaction.amount)
-            self.sheet.update_cell(row_num, 5, 'from')
-            self.sheet.update_cell(row_num, 9, transaction.to_from)
+            self.sheet.update_cell(row_num, 6, transaction.amount)
+            self.sheet.update_cell(row_num, 7, transaction.to_from)
         else:
             self.sheet.update_cell(row_num, 4, transaction.amount)
-            self.sheet.update_cell(row_num, 5, 'to')
-            self.sheet.update_cell(row_num, 6, transaction.to_from)
+            self.sheet.update_cell(row_num, 5, transaction.to_from)
 
         print(f'Added transaction with ID {transaction.id} to ledger')
         print(f'\t{transaction}')
