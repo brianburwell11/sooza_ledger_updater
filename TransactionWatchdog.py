@@ -19,12 +19,12 @@ ledger_key = getenv('sooza_ledger_key')
 sheet_name = getenv('sooza_venmo_name')
 
 class Watchdog():
-    def __init__(self):
+    def __init__(self, path_to_directory):
         self.w = FileSystemEventHandler()
         self.w.on_created = lambda new_file: self.__rename_file_and_update_ledger(new_file.src_path)
 
         self.o = Observer()
-        self.o.schedule(self.w, './venmo_statements')
+        self.o.schedule(self.w, path_to_directory)
 
     def wait_for_new_file(self):
         self.o.start()

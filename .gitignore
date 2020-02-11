@@ -1,6 +1,6 @@
 *.csv
-venmo_statements/
 token.pickle
 credentials.json
 client_secret.json
+*test*
 __pycache__
